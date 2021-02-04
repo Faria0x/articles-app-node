@@ -3,9 +3,11 @@ const app = express()
 
 const CategoriesController = require("./categories/CategoriesController")
 const ArticlesController = require("./articles/ArticlesController")
+const UsersController = require("./user/UserController")
 
 const Article = require("./articles/Article")
 const Category = require("./categories/Category")
+const User = require("./user/User")
 
 
 const connection = require("./database/database")
@@ -26,6 +28,7 @@ connection.authenticate().then(()=> {
  
 app.use("/", CategoriesController)
 app.use("/", ArticlesController)
+app.use("/", UsersController)
 
 app.get("/", (req,res)=> {
     Article.findAll({order: [["id", "desc"]],limit: 4}).then((articles)=> {
