@@ -96,6 +96,7 @@ router.get("/articles/page/:num",(req,res)=> {
         limit: 4,
         offset: offset ,
         order:[
+            
             ["id", "desc"]
         ]  // retorna a partir de um artigo
     }).then((articles)=> {
