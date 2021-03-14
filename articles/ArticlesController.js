@@ -3,8 +3,9 @@ const router = express.Router()
 const Category = require("../categories/Category")
 const slugify = require("slugify")
 const Article = require("./Article")
+const adminAuth = require("../middlewares/adminAuth")
 
-router.get("/admin/articles",(req,res)=> {
+router.get("/admin/articles", adminAuth ,(req,res)=> {
     Article.findAll({include: [{model: Category}]}).then((articles)=> {
         res.render("admin/articles/index",{articles: articles})
     })

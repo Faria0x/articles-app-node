@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const session = require("express-session")
 
 const CategoriesController = require("./categories/CategoriesController")
 const ArticlesController = require("./articles/ArticlesController")
@@ -17,6 +18,9 @@ app.set("view engine", "ejs")
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+app.use(session({
+    secret: "qualquercoisa", cookie: {maxAge: 3000000}
+}))
 
 app.use(express.static("public"))
 
@@ -38,6 +42,20 @@ app.get("/", (req,res)=> {
        
     })
     
+})
+
+app.get("/session",(req,res)=> {
+    req.session.curso = "Node Js"
+    req.session.ano = 2012
+    req.session.user = {
+        username: "lucasfaria10",
+        email: "lucasfaria@hotmail.com"
+    }
+    res.send("Sessao gerada")
+})
+
+app.get("/leitura",(req,res)=> {
+    res.send(req.session.user)
 })
 
 app.get("/:slug",(req,res)=> {
